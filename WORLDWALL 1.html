@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stand Penalaran Kritis - X TKI 2</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background: linear-gradient(180deg, #9ad6ff 0%, #3da5ff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    animation: fadeInBody 1.5s ease-in-out;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* ======== ANIMASI ======== */
+  @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes float { 0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);} }
+  @keyframes slideUp { 0%{opacity:0;transform:translateY(40px);}100%{opacity:1;transform:translateY(0);} }
+  @keyframes fadeIn { 0%{opacity:0;transform:scale(0.95);}100%{opacity:1;transform:scale(1);} }
+
+  /* ======== HEADER ======== */
+  .header {
+    width: 100%;
+    height: 230px;
+    background: url('https://files.catbox.moe/1ngblp.jpg') no-repeat center;
+    background-size: cover;
+    animation: slideUp 1.3s ease-in-out;
+    position: relative;
+  }
+
+  /* ======== MENU BUTTON ======== */
+  .menu-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 8px;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 6px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .menu-btn:hover {
+    background: #fff;
+    transform: scale(1.05);
+  }
+
+  /* ======== MENU OVERLAY ======== */
+  .menu-overlay {
+    position: fixed;
+    top: 0; right: 0;
+    width: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    transition: width 0.4s ease;
+    z-index: 9;
+  }
+
+  .menu-content {
+    background: #fff;
+    width: 220px;
+    height: 100%;
+    padding-top: 80px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    box-shadow: -3px 0 15px rgba(0,0,0,0.25);
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+  }
+
+  .menu-overlay.active {
+    width: 100%;
+  }
+
+  .menu-overlay.active .menu-content {
+    transform: translateX(0);
+  }
+
+  .menu-content a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    padding: 14px 25px;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.3s ease;
+  }
+
+  .menu-content a:hover {
+    background: #3da5ff;
+    color: #fff;
+  }
+
+  /* ======== LOGO ======== */
+  .logo {
+    width: 150px;
+    margin-top: -55px;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* ======== TEKS WELCOME ======== */
+  .welcome {
+    color: #fff;
+    text-align: center;
+    font-weight: 800;
+    font-size: 32px;
+    margin-top: 18px;
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    letter-spacing: 1px;
+    animation: slideUp 1.2s ease-in-out;
+  }
+
+  /* ======== BAGIAN GAME ======== */
+  .game-section {
+    text-align: center;
+    margin-top: 35px;
+    animation: slideUp 1.2s ease-in-out;
+  }
+
+  .game-title {
+    color: #fff;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    margin-bottom: 12px;
+  }
+
+  /* ======== KARTU QR ======== */
+  .qr-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1.2s ease-out;
+    transition: transform 0.3s ease;
+  }
+
+  .qr-card:hover { transform: scale(1.04); }
+
+  .qr-card img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .qr-card img:hover { transform: scale(1.05); }
+
+  .qr-card p {
+    font-weight: 700;
+    color: #000;
+    margin-top: 15px;
+    font-size: 20px;
+  }
+
+  /* ======== TOMBOL ======== */
+  .btn {
+    display: block;
+    width: 300px;
+    background: linear-gradient(90deg, #ffffff, #e6e6e6);
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 14px 0;
+    border-radius: 12px;
+    margin: 20px auto 40px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    background: #fff;
+  }
+
+  /* ======== TERIMA KASIH ======== */
+  .thanks {
+    margin-top: 60px;
+    text-align: center;
+    color: #fff;
+    animation: slideUp 1.2s ease-in-out;
+  }
+
+  .thanks h2 {
+    font-size: 26px;
+    font-weight: 800;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    margin-bottom: 25px;
+  }
+
+  .guru-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+
+  .guru-card {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 220px;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    animation: fadeIn 1.2s ease-in-out;
+    transition: transform 0.3s ease;
+  }
+
+  .guru-card:hover { transform: scale(1.05); }
+
+  .guru-card img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
+
+  .guru-card p {
+    font-weight: 700;
+    color: #000;
+    font-size: 16px;
+  }
+
+  /* ======== WATERMARK ======== */
+  .watermark {
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    animation: fadeInBody 2s ease-in-out;
+  }
+
+  /* ======== RESPONSIVE ======== */
+  @media (max-width: 600px) {
+    .header { height: 180px; }
+    .logo { width: 120px; margin-top: -45px; }
+    .welcome { font-size: 24px; }
+    .qr-card, .btn { width: 85%; }
+    .game-title { font-size: 22px; }
+    .guru-card { width: 160px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </div>
+
+  <!-- MENU OVERLAY -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-content">
+      <a href="#game1">🎮 Game 1</a>
+      <a href="#game2">🎯 Game 2</a>
+      <a href="#game3">🧩 Game 3</a>
+      <a href="#thanks">🙏 Terima Kasih</a>
+    </div>
+  </div>
+
+  <img src="https://files.catbox.moe/3eey3b.png" alt="Logo Sekolah" class="logo">
+
+  <p class="welcome">
+    SELAMAT DATANG DI STAND <br> PENALARAN KRITIS
+  </p>
+
+  <!-- GAME 1 -->
+  <section class="game-section" id="game1">
+    <h2 class="game-title">🎮 GAME 1</h2>
+    <div class="qr-card">
+      <img src="https://files.catbox.moe/k77icw.png" alt="QR Code">
+      <p>QR WORLDWALL 1</p>
+    </div>
+    <a href="https://wordwall.net/resource/99843120" target="_blank" class="btn">MAIN SEKARANG</a>
+  </section>
+
+  <!-- GAME 2 -->
+  <section class="game-section" id="game2">
+    <h2 class="game-title">🎯 GAME 2</h2>
+    <div class="qr-card">
+      <img src="https://files.catbox.moe/k77icw.png" alt="QR Code">
+      <p>QR WORLDWALL 2</p>
+    </div>
+    <a href="https://wordwall.net/resource/99843120" target="_blank" class="btn">MAIN SEKARANG</a>
+  </section>
+
+  <!-- GAME 3 -->
+  <section class="game-section" id="game3">
+    <h2 class="game-title">🧩 GAME 3</h2>
+    <div class="qr-card">
+      <img src="https://files.catbox.moe/k77icw.png" alt="QR Code">
+      <p>QR WORLDWALL 3</p>
+    </div>
+    <a href="https://wordwall.net/resource/99843120" target="_blank" class="btn">MAIN SEKARANG</a>
+  </section>
+
+  <!-- TERIMA KASIH -->
+  <section class="thanks" id="thanks">
+    <h2>🙏 TERIMA KASIH KEPADA 🙏</h2>
+    <div class="guru-container">
+      <div class="guru-card">
+        <img src="https://files.catbox.moe/qozb3y.jpg" alt="Bu Nuniek">
+        <p>Nuniek Emmy Wulandari, S.Pd</p>
+      </div>
+      <div class="guru-card">
+        <img src="https://files.catbox.moe/pimjmw.jpg" alt="Bu Siti">
+        <p>Siti Mariyam, S.Pd</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="watermark">
+    Created by siswa kelas X TKI 2
+  </div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const menuOverlay = document.getElementById('menuOverlay');
+
+  menuBtn.addEventListener('click', () => {
+    menuOverlay.classList.toggle('active');
+  });
+
+  // Tutup menu saat link diklik
+  document.querySelectorAll('.menu-content a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOverlay.classList.remove('active');
+    });
+  });
+
+  // Tutup jika klik di luar menu
+  menuOverlay.addEventListener('click', (e) => {
+    if (e.target === menuOverlay) menuOverlay.classList.remove('active');
+  });
+</script>
+
+</body>
+</html>
